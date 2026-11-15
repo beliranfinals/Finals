@@ -1,160 +1,187 @@
 
+import os
 import sqlite3
 
-DATABASE = "students.db"
+DATABASE = os.environ.get(
+    "DATABASE",
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "students.db")
+)
 
 
 def get_db_connection():
-    conn = sqlite3.connect(DATABASE)
-    conn.row_factory = sqlite3.Row
-    return conn
+    connection = sqlite3.connect(DATABASE)
+    connection.row_factory = sqlite3.Row
+    return connection
 
 
-# ------------------------------------
-# CHECK DUPLICATE STUDENT ID
-# ------------------------------------
+def initialize_database():
+    connection = get_db_connection()
 
-def student_id_exists(student_id):
-    conn = get_db_connection()
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS students (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            student_id TEXT NOT NULL UNIQUE,
+            name TEXT NOT NULL,
+            program TEXT NOT NULL,
+            year INTEGER NOT NULL,
+            section TEXT NOT NULL
+        )
+    """)
 
-    student = conn.execute("""
-        SELECT id FROM students
-        WHERE student_id = ?
-    """, (student_id,)).fetchone()
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS partner_records (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            partner_api_url TEXT NOT NULL,
+            partner_student_id TEXT NOT NULL,
+            name TEXT NOT NULL,
+            program TEXT NOT NULL,
+            year INTEGER NOT NULL,
+            section TEXT NOT NULL,
+            saved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(partner_api_url, partner_student_id)
+        )
+    """)
 
-    conn.close()
+    connection.commit()
+    connection.close()
 
-    return student is not None
-
-
-# ------------------------------------
-# CREATE STUDENT
-# ------------------------------------
-
-def create_student(student):
-
-    conn = get_db_connection()
-
-    cursor = conn.execute("""
-        INSERT INTO students
-        (student_id, name, program, year, section, source)
-        VALUES (?, ?, ?, ?, ?, ?)
-    """, (
-        student["student_id"],
-        student["name"],
-        student["program"],
-        student["year"],
-        student["section"],
-        student.get("source", "Local")
-    ))
-
-    conn.commit()
-
-    new_id = cursor.lastrowid
-
-    conn.close()
-
-    return new_id
-
-
-# ------------------------------------
-# READ ALL STUDENTS
-# ------------------------------------
 
 def get_all_students():
+    connection = get_db_connection()
 
-    conn = get_db_connection()
-
-    students = conn.execute("""
-        SELECT * FROM students
-        ORDER BY id DESC
+    students = connection.execute("""
+        SELECT * FROM students ORDER BY id DESC
     """).fetchall()
 
-    conn.close()
-
-    return [dict(student) for student in students]
-
-
-# ------------------------------------
-# READ ONE STUDENT
-# ------------------------------------
-
-def get_student(student_id):
-
-    conn = get_db_connection()
-
-    student = conn.execute("""
-        SELECT * FROM students
-        WHERE id = ?
-    """, (student_id,)).fetchone()
-
-    conn.close()
-
-    return dict(student) if student else None
+    connection.close()
+    return students
 
 
-# ------------------------------------
-# UPDATE STUDENT
-# ------------------------------------
+def get_student(record_id):
+    connection = get_db_connection()
 
-def update_student(student_id, student):
+    student = connection.execute("""
+        SELECT * FROM students WHERE id = ?
+    """, (record_id,)).fetchone()
 
-    conn = get_db_connection()
-
-    cursor = conn.execute("""
-        UPDATE students
-        SET student_id = ?,
-            name = ?,
-            program = ?,
-            year = ?,
-            section = ?
-        WHERE id = ?
-    """, (
-        student["student_id"],
-        student["name"],
-        student["program"],
-        student["year"],
-        student["section"],
-        student_id
-    ))
-
-    conn.commit()
-
-    updated = cursor.rowcount > 0
-
-    conn.close()
-
-    return updated
+    connection.close()
+    return student
 
 
-# ------------------------------------
-# DELETE STUDENT
-# ------------------------------------
+def add_student(student_id, name, program, year, section):
+    connection = get_db_connection()
 
-def delete_student(student_id):
+    try:
+        connection.execute("""
+            INSERT INTO students
+            (student_id, name, program, year, section)
+            VALUES (?, ?, ?, ?, ?)
+        """, (student_id, name, program, year, section))
 
-    conn = get_db_connection()
+        connection.commit()
+        return True, "Student added successfully."
 
-    cursor = conn.execute("""
-        DELETE FROM students
-        WHERE id = ?
-    """, (student_id,))
+    except sqlite3.IntegrityError:
+        return False, "Student ID already exists."
 
-    conn.commit()
+    finally:
+        connection.close()
 
+
+def update_student(record_id, student_id, name, program, year, section):
+    connection = get_db_connection()
+
+    try:
+        cursor = connection.execute("""
+            UPDATE students
+            SET student_id = ?,
+                name = ?,
+                program = ?,
+                year = ?,
+                section = ?
+            WHERE id = ?
+        """, (student_id, name, program, year, section, record_id))
+
+        connection.commit()
+
+        if cursor.rowcount == 0:
+            return False, "Student record not found."
+
+        return True, "Student updated successfully."
+
+    except sqlite3.IntegrityError:
+        return False, "Student ID already exists."
+
+    finally:
+        connection.close()
+
+
+def delete_student(record_id):
+    connection = get_db_connection()
+
+    cursor = connection.execute("""
+        DELETE FROM students WHERE id = ?
+    """, (record_id,))
+
+    connection.commit()
     deleted = cursor.rowcount > 0
-
-    conn.close()
+    connection.close()
 
     return deleted
 
 
-# ------------------------------------
-# IMPORT PARTNER STUDENT
-# ------------------------------------
+def get_partner_records():
+    connection = get_db_connection()
 
-def import_student(student):
+    records = connection.execute("""
+        SELECT * FROM partner_records ORDER BY id DESC
+    """).fetchall()
 
-    student["source"] = "Classmate API"
+    connection.close()
+    return records
 
-    return create_student(student)
+
+def save_partner_record(api_url, student):
+    partner_id = str(
+        student.get("student_id") or student.get("id") or ""
+    ).strip()
+
+    if not partner_id:
+        return False, "Partner student ID is missing."
+
+    try:
+        year = int(student.get("year", 0))
+    except (TypeError, ValueError):
+        year = 0
+
+    connection = get_db_connection()
+
+    try:
+        connection.execute("""
+            INSERT INTO partner_records
+            (
+                partner_api_url,
+                partner_student_id,
+                name,
+                program,
+                year,
+                section
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (
+            api_url,
+            partner_id,
+            str(student.get("name", "")),
+            str(student.get("program", "")),
+            year,
+            str(student.get("section", ""))
+        ))
+
+        connection.commit()
+        return True, "Classmate record saved successfully."
+
+    except sqlite3.IntegrityError:
+        return False, "This classmate record is already saved."
+
+    finally:
+        connection.close()

@@ -4,259 +4,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Data Exchange Portal</title>
+
+    <title>Student Information System</title>
 
     <style>
-        :root {
-            --pink: #c45b83;
-            --pink-dark: #a8446b;
-            --pink-light: #f9e4ec;
-            --plum: #563448;
-            --mauve: #85516b;
-            --background: #faf6f8;
-            --white: #ffffff;
-            --text: #3e3440;
-            --muted: #8b7c87;
-            --border: #eadde4;
-            --green: #26845d;
-            --red: #bd4558;
-        }
-
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
         }
 
         body {
-            background: var(--background);
-            color: var(--text);
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
         }
 
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            width: 250px;
-            background: var(--plum);
+        header {
+            background: #164e9b;
             color: white;
-            padding: 28px 18px;
-            flex-shrink: 0;
+            padding: 25px 6%;
         }
 
-        .brand {
-            font-size: 19px;
-            font-weight: bold;
-            line-height: 1.5;
-            margin-bottom: 35px;
-            padding: 0 10px;
+        header h1 {
+            margin: 0 0 8px;
         }
 
-        .brand span {
-            color: #f4b9cf;
+        header p {
+            margin: 5px 0;
         }
 
-        .nav-label {
-            color: #d9bac8;
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            margin: 22px 10px 10px;
-            text-transform: uppercase;
-        }
-
-        .nav-link {
-            display: block;
-            padding: 13px 12px;
-            margin-bottom: 6px;
-            color: #f8eaf0;
-            text-decoration: none;
-            border-radius: 9px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            background: var(--pink);
-            color: white;
-        }
-
-        .main {
-            flex: 1;
-            min-width: 0;
-            padding: 30px;
-        }
-
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .topbar h1 {
-            color: var(--plum);
-            font-size: 25px;
-        }
-
-        .developer {
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        .welcome {
-            background: linear-gradient(120deg, #c45b83, #85516b);
-            color: white;
-            padding: 27px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-        }
-
-        .welcome h2 {
-            font-size: 23px;
-            margin-bottom: 8px;
-        }
-
-        .welcome p {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #fff0f5;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 21px;
-        }
-
-        .stat-card p {
-            color: var(--muted);
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
-
-        .stat-card h2 {
-            font-size: 29px;
-            color: var(--pink-dark);
+        .container {
+            width: 92%;
+            max-width: 1250px;
+            margin: 25px auto;
         }
 
         .card {
             background: white;
-            padding: 24px;
-            border: 1px solid var(--border);
-            border-radius: 13px;
-            margin-bottom: 23px;
-            box-shadow: 0 3px 12px rgba(86, 52, 72, 0.04);
+            padding: 22px;
+            margin-bottom: 22px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 18px;
-        }
-
-        .card h2 {
-            font-size: 19px;
-            color: var(--plum);
-        }
-
-        .card-description {
-            font-size: 13px;
-            color: var(--muted);
-            margin-top: 6px;
-            line-height: 1.5;
+        h2 {
+            color: #164e9b;
+            margin-top: 0;
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
-
-        .form-group label {
+        label {
+            display: block;
+            margin-bottom: 5px;
             font-size: 13px;
             font-weight: bold;
-            color: var(--plum);
         }
 
-        input,
-        select {
+        input, select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: white;
-            color: var(--text);
-            outline: none;
+            padding: 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            margin-bottom: 10px;
             font-size: 14px;
         }
 
-        input:focus,
-        select:focus {
-            border-color: var(--pink);
-            box-shadow: 0 0 0 3px rgba(196, 91, 131, 0.1);
-        }
-
-        button {
+        button, .api-link {
+            display: inline-block;
             border: none;
-            border-radius: 8px;
-            padding: 11px 17px;
-            background: var(--pink);
-            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
             cursor: pointer;
-            font-weight: bold;
+            color: white;
+            text-decoration: none;
             font-size: 13px;
-            transition: 0.2s;
+            margin: 3px 0;
         }
 
-        button:hover {
-            background: var(--pink-dark);
-        }
-
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .btn-secondary {
-            background: var(--plum);
-        }
-
-        .btn-secondary:hover {
-            background: var(--mauve);
-        }
-
-        .btn-small {
-            padding: 8px 11px;
-            font-size: 12px;
-        }
-
-        .form-actions {
-            margin-top: 17px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        .primary { background: #164e9b; }
+        .success { background: #15803d; }
+        .danger { background: #dc2626; }
+        .secondary { background: #475569; }
 
         .table-wrapper {
             width: 100%;
@@ -266,143 +99,68 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 720px;
+            min-width: 700px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         th {
-            background: var(--pink-light);
-            color: var(--plum);
-            text-align: left;
-            padding: 13px 12px;
-            font-size: 12px;
+            background: #164e9b;
+            color: white;
         }
 
-        td {
-            border-bottom: 1px solid var(--border);
-            padding: 13px 12px;
-            font-size: 13px;
-        }
-
-        tr:hover td {
-            background: #fffafd;
-        }
-
-        .source-tag {
-            display: inline-block;
-            padding: 5px 9px;
-            border-radius: 20px;
-            font-size: 11px;
-            background: var(--pink-light);
-            color: var(--pink-dark);
-            white-space: nowrap;
+        tr:hover {
+            background: #f8fafc;
         }
 
         .message {
-            display: none;
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 17px;
-            font-size: 13px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 6px;
         }
 
         .message.success {
-            display: block;
-            background: #e6f5ed;
-            color: var(--green);
+            background: #dcfce7;
+            color: #166534;
         }
 
         .message.error {
-            display: block;
-            background: #fdecef;
-            color: var(--red);
+            background: #fee2e2;
+            color: #991b1b;
         }
 
-        .search-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 18px;
+        details {
+            margin-bottom: 8px;
         }
 
-        .search-row input {
-            flex: 1;
+        summary {
+            cursor: pointer;
+            color: #164e9b;
+            font-weight: bold;
         }
 
-        .empty {
+        .edit-form {
+            min-width: 200px;
+            padding: 10px;
+        }
+
+        footer {
             text-align: center;
-            color: var(--muted);
-            padding: 25px;
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        .footer {
-            text-align: center;
-            color: var(--muted);
-            font-size: 12px;
-            padding: 20px 0;
-        }
-
-        @media (max-width: 850px) {
-            .layout {
-                display: block;
-            }
-
-            .sidebar {
-                width: 100%;
-                padding: 18px;
-            }
-
-            .brand {
-                margin-bottom: 15px;
-            }
-
-            .nav-label {
-                display: none;
-            }
-
-            .sidebar nav {
-                display: flex;
-                gap: 7px;
-                flex-wrap: wrap;
-            }
-
-            .nav-link {
-                margin: 0;
-                padding: 10px;
-                font-size: 12px;
-            }
-
-            .main {
-                padding: 20px;
-            }
+            padding: 22px;
+            color: #64748b;
         }
 
         @media (max-width: 600px) {
-            .stats {
-                grid-template-columns: 1fr;
+            .container {
+                width: 95%;
             }
 
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .topbar {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .topbar h1 {
-                font-size: 21px;
-            }
-
-            .search-row {
-                flex-direction: column;
+            .card {
+                padding: 15px;
             }
         }
     </style>
@@ -410,942 +168,284 @@
 
 <body>
 
-<div class="layout">
+<header>
+    <h1>Student Information System</h1>
+    <p>Flask API with SQLite Database</p>
+    <p>AWS Lightsail Deployment</p>
+    <p>Developer: Arnie Beliran</p>
+</header>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
+<div class="container">
 
-        <div class="brand">
-            STUDENT <span>DATA</span><br>
-            EXCHANGE PORTAL
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <section class="card">
+        <h2>Add Student Information</h2>
+
+        <form action="{{ url_for('add_student_route') }}" method="POST">
+            <div class="form-grid">
+
+                <div>
+                    <label>Student ID</label>
+                    <input type="text" name="student_id"
+                           placeholder="2026-00128" required>
+                </div>
+
+                <div>
+                    <label>Full Name</label>
+                    <input type="text" name="name"
+                           placeholder="Enter full name" required>
+                </div>
+
+                <div>
+                    <label>Program</label>
+                    <select name="program" required>
+                        <option value="">Select Program</option>
+                        <option value="BSIT">BSIT</option>
+                        <option value="BSCS">BSCS</option>
+                        <option value="BSIS">BSIS</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Year Level</label>
+                    <select name="year" required>
+                        <option value="">Select Year</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Section</label>
+                    <input type="text" name="section"
+                           placeholder="A" required>
+                </div>
+
+            </div>
+
+            <button type="submit" class="primary">
+                Add Student
+            </button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>My Student Records</h2>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student Number</th>
+                        <th>Name</th>
+                        <th>Program</th>
+                        <th>Year</th>
+                        <th>Section</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.id }}</td>
+                        <td>{{ student.student_id }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.program }}</td>
+                        <td>{{ student.year }}</td>
+                        <td>{{ student.section }}</td>
+                        <td>
+                            <details>
+                                <summary>Edit</summary>
+
+                                <form class="edit-form"
+                                      action="{{ url_for('update_student_route', record_id=student.id) }}"
+                                      method="POST">
+
+                                    <input type="text" name="student_id"
+                                           value="{{ student.student_id }}" required>
+
+                                    <input type="text" name="name"
+                                           value="{{ student.name }}" required>
+
+                                    <input type="text" name="program"
+                                           value="{{ student.program }}" required>
+
+                                    <input type="number" name="year"
+                                           value="{{ student.year }}"
+                                           min="1" max="6" required>
+
+                                    <input type="text" name="section"
+                                           value="{{ student.section }}" required>
+
+                                    <button class="success" type="submit">
+                                        Update
+                                    </button>
+                                </form>
+                            </details>
+
+                            <form method="POST"
+                                  action="{{ url_for('delete_student_route', record_id=student.id) }}"
+                                  onsubmit="return confirm('Are you sure you want to delete this record?');">
+
+                                <button class="danger" type="submit">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    {% else %}
+                    <tr>
+                        <td colspan="7">No student records found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-
-        <div class="nav-label">Main Menu</div>
-
-        <nav>
-            <a class="nav-link active" data-section="dashboard">Dashboard</a>
-            <a class="nav-link" data-section="my-records">My Records</a>
-            <a class="nav-link" data-section="retrieve-student">Retrieve Student</a>
-            <a class="nav-link" data-section="partner-records">Classmate's Records</a>
-            <a class="nav-link" data-section="send-record">Send Student Record</a>
-            <a class="nav-link" data-section="integration">Integration Details</a>
-        </nav>
-
-    </aside>
-
-
-    <!-- MAIN CONTENT -->
-    <main class="main">
-
-        <header class="topbar">
-            <div>
-                <h1>Student Data Exchange & Integration Portal</h1>
-                <p class="developer">Developed by Arnie Beliran</p>
-            </div>
-        </header>
-
-        <div id="message-box" class="message"></div>
-
-
-        <!-- DASHBOARD -->
-        <section id="dashboard" class="section active">
-
-            <div class="welcome">
-                <h2>Student Information Management</h2>
-                <p>
-                    Manage your student records, retrieve your classmate's
-                    information, save selected records, and exchange data
-                    between two independently deployed student systems.
-                </p>
-            </div>
-
-            <div class="stats">
-
-                <div class="stat-card">
-                    <p>My Student Records</p>
-                    <h2 id="local-count">0</h2>
-                </div>
-
-                <div class="stat-card">
-                    <p>Imported Classmate Records</p>
-                    <h2 id="imported-count">0</h2>
-                </div>
-
-                <div class="stat-card">
-                    <p>Retrieved Partner Records</p>
-                    <h2 id="partner-count">0</h2>
-                </div>
-
-            </div>
-
-            <div class="card">
-                <h2>Welcome to Your Student Portal</h2>
-                <p class="card-description">
-                    Use the menu on the left to add student information,
-                    view your records, retrieve your classmate's records,
-                    and send student information to another system.
-                </p>
-            </div>
-
-        </section>
-
-
-        <!-- MY RECORDS -->
-        <section id="my-records" class="section">
-
-            <div class="card">
-
-                <div class="card-header">
-                    <div>
-                        <h2>Add Student Information</h2>
-                        <p class="card-description">
-                            Enter student details to save a new record
-                            in your local database.
-                        </p>
-                    </div>
-                </div>
-
-                <form id="add-student-form">
-
-                    <div class="form-grid">
-
-                        <div class="form-group">
-                            <label for="new-student-id">Student ID</label>
-                            <input type="text" id="new-student-id"
-                                   placeholder="e.g. 2026-00123" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="new-student-name">Full Name</label>
-                            <input type="text" id="new-student-name"
-                                   placeholder="Enter full name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="new-student-program">Program</label>
-                            <input type="text" id="new-student-program"
-                                   placeholder="e.g. BSIT" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="new-student-year">Year Level</label>
-                            <select id="new-student-year" required>
-                                <option value="">Select Year Level</option>
-                                <option value="1">1st Year</option>
-                                <option value="2">2nd Year</option>
-                                <option value="3">3rd Year</option>
-                                <option value="4">4th Year</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="new-student-section">Section</label>
-                            <input type="text" id="new-student-section"
-                                   placeholder="e.g. A" required>
-                        </div>
-
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" id="add-student-button">
-                            Add Student
-                        </button>
-
-                        <button type="reset" class="btn-secondary">
-                            Clear Form
-                        </button>
-                    </div>
-
-                </form>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-header">
-                    <div>
-                        <h2>My Student Records</h2>
-                        <p class="card-description">
-                            All student records saved in your database.
-                        </p>
-                    </div>
-
-                    <button onclick="loadMyRecords()" class="btn-secondary">
-                        Refresh Records
-                    </button>
-                </div>
-
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Student ID</th>
-                                <th>Full Name</th>
-                                <th>Program</th>
-                                <th>Year</th>
-                                <th>Section</th>
-                                <th>Source</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="my-records-table">
-                            <tr>
-                                <td colspan="7" class="empty">
-                                    Loading student records...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- RETRIEVE STUDENT -->
-        <section id="retrieve-student" class="section">
-
-            <div class="card">
-
-                <h2>Retrieve Student Information</h2>
-
-                <p class="card-description">
-                    Search your saved student records using Student ID
-                    or Full Name.
-                </p>
-
-                <form id="retrieve-form">
-
-                    <div class="search-row">
-                        <input type="text" id="retrieve-query"
-                               placeholder="Enter Student ID or Full Name"
-                               required>
-
-                        <button type="submit" id="search-button">
-                            Search Student
-                        </button>
-
-                        <button type="button" class="btn-secondary"
-                                onclick="clearStudentSearch()">
-                            Clear
-                        </button>
-                    </div>
-
-                </form>
-
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Student ID</th>
-                                <th>Full Name</th>
-                                <th>Program</th>
-                                <th>Year</th>
-                                <th>Section</th>
-                                <th>Source</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="retrieve-results">
-                            <tr>
-                                <td colspan="7" class="empty">
-                                    Search for a student to display records.
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- CLASSMATE RECORDS -->
-        <section id="partner-records" class="section">
-
-            <div class="card">
-
-                <div class="card-header">
-                    <div>
-                        <h2>Classmate's Student Records</h2>
-                        <p class="card-description">
-                            Retrieve records from your classmate's deployed API.
-                            Save selected records to your database.
-                        </p>
-                    </div>
-
-                    <button onclick="loadPartnerRecords()">
-                        Retrieve Records
-                    </button>
-                </div>
-
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Student ID</th>
-                                <th>Full Name</th>
-                                <th>Program</th>
-                                <th>Year</th>
-                                <th>Section</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="partner-records-table">
-                            <tr>
-                                <td colspan="6" class="empty">
-                                    Click Retrieve Records to load your
-                                    classmate's student information.
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- SEND STUDENT RECORD -->
-        <section id="send-record" class="section">
-
-            <div class="card">
-
-                <h2>Send Student Record to Classmate</h2>
-
-                <p class="card-description">
-                    Enter the student information that you want to send
-                    to your classmate's API.
-                </p>
-
-                <form id="send-form">
-
-                    <div class="form-grid">
-
-                        <div class="form-group">
-                            <label for="send-student-id">Student ID</label>
-                            <input type="text" id="send-student-id"
-                                   placeholder="Enter Student ID" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="send-name">Full Name</label>
-                            <input type="text" id="send-name"
-                                   placeholder="Enter Full Name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="send-program">Program</label>
-                            <input type="text" id="send-program"
-                                   placeholder="e.g. BSIT" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="send-year">Year Level</label>
-                            <select id="send-year" required>
-                                <option value="">Select Year Level</option>
-                                <option value="1">1st Year</option>
-                                <option value="2">2nd Year</option>
-                                <option value="3">3rd Year</option>
-                                <option value="4">4th Year</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="send-section">Section</label>
-                            <input type="text" id="send-section"
-                                   placeholder="e.g. A" required>
-                        </div>
-
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" id="send-button">
-                            Send Student Record
-                        </button>
-                    </div>
-
-                </form>
-
-            </div>
-
-        </section>
-
-
-        <!-- INTEGRATION DETAILS -->
-        <section id="integration" class="section">
-
-            <div class="card">
-
-                <h2>System Integration Details</h2>
-
-                <p class="card-description">
-                    This application connects your student information
-                    system with your classmate's independently deployed API.
-                </p>
-
-                <br>
-
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Function</th>
-                                <th>Endpoint</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>View My Records</td>
-                                <td>/api/students</td>
-                                <td>Displays your saved records.</td>
-                            </tr>
-
-                            <tr>
-                                <td>Add Student</td>
-                                <td>/add-student</td>
-                                <td>Saves a new student to your database.</td>
-                            </tr>
-
-                            <tr>
-                                <td>Retrieve Student</td>
-                                <td>/search-students</td>
-                                <td>Searches your local student records.</td>
-                            </tr>
-
-                            <tr>
-                                <td>Retrieve Partner Records</td>
-                                <td>/partner-records</td>
-                                <td>Gets records from your classmate's API.</td>
-                            </tr>
-
-                            <tr>
-                                <td>Save Partner Record</td>
-                                <td>/import-student</td>
-                                <td>Saves a selected remote record locally.</td>
-                            </tr>
-
-                            <tr>
-                                <td>Send Student Record</td>
-                                <td>/send-to-partner</td>
-                                <td>Sends student data to your classmate's API.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <footer class="footer">
-            Student Data Exchange & Integration Portal
-            <br>
-            Developed by Arnie Beliran
-        </footer>
-
-    </main>
+    </section>
+
+    <section class="card">
+        <h2>Classmate's Student Records</h2>
+
+        <p>
+            Partner API:
+            {{ partner_api_url if partner_api_url else "Not configured" }}
+        </p>
+
+        {% if partner_error %}
+            <div class="message error">{{ partner_error }}</div>
+        {% endif %}
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Program</th>
+                        <th>Year</th>
+                        <th>Section</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for student in partner_students %}
+                    <tr>
+                        <td>{{ student.get('student_id', student.get('id', 'N/A')) }}</td>
+                        <td>{{ student.get('name', 'N/A') }}</td>
+                        <td>{{ student.get('program', 'N/A') }}</td>
+                        <td>{{ student.get('year', 'N/A') }}</td>
+                        <td>{{ student.get('section', 'N/A') }}</td>
+                        <td>
+                            <form method="POST"
+                                  action="{{ url_for('save_partner') }}">
+
+                                <input type="hidden" name="student_id"
+                                       value="{{ student.get('student_id', student.get('id', '')) }}">
+
+                                <button type="submit" class="success">
+                                    Save Record
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    {% else %}
+                    <tr>
+                        <td colspan="6">No classmate records available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Saved Classmate Records</h2>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Partner Student ID</th>
+                        <th>Name</th>
+                        <th>Program</th>
+                        <th>Year</th>
+                        <th>Section</th>
+                        <th>Date Saved</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for record in saved_partner_records %}
+                    <tr>
+                        <td>{{ record.id }}</td>
+                        <td>{{ record.partner_student_id }}</td>
+                        <td>{{ record.name }}</td>
+                        <td>{{ record.program }}</td>
+                        <td>{{ record.year }}</td>
+                        <td>{{ record.section }}</td>
+                        <td>{{ record.saved_at }}</td>
+                    </tr>
+
+                    {% else %}
+                    <tr>
+                        <td colspan="7">No saved classmate records.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Application API Endpoints</h2>
+
+        <a class="api-link primary" href="/students" target="_blank">
+            View Students JSON
+        </a>
+
+        <a class="api-link primary" href="/api/students" target="_blank">
+            Student API
+        </a>
+
+        <a class="api-link secondary" href="/partner-records" target="_blank">
+            Saved Partner Records
+        </a>
+
+        <a class="api-link secondary" href="/api/partner/students" target="_blank">
+            Partner API
+        </a>
+
+        <a class="api-link secondary" href="/about" target="_blank">
+            About
+        </a>
+
+        <a class="api-link success" href="/health" target="_blank">
+            Health Check
+        </a>
+    </section>
 
 </div>
 
-
-<script>
-
-// =====================================================
-// GENERAL MESSAGE
-// =====================================================
-
-function showMessage(message, type = "success") {
-    const box = document.getElementById("message-box");
-
-    box.textContent = message;
-    box.className = "message " + type;
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-    setTimeout(() => {
-        box.className = "message";
-        box.textContent = "";
-    }, 5000);
-}
-
-
-// =====================================================
-// SAFE TABLE CELL
-// =====================================================
-
-function addCell(row, value) {
-    const cell = document.createElement("td");
-    cell.textContent = value ?? "";
-    row.appendChild(cell);
-}
-
-
-// =====================================================
-// DISPLAY SOURCE LABEL
-// =====================================================
-
-function addSourceCell(row, source) {
-    const cell = document.createElement("td");
-    const tag = document.createElement("span");
-
-    tag.className = "source-tag";
-    tag.textContent = source || "Local";
-
-    cell.appendChild(tag);
-    row.appendChild(cell);
-}
-
-
-// =====================================================
-// LOAD MY STUDENT RECORDS
-// =====================================================
-
-async function loadMyRecords() {
-    const table = document.getElementById("my-records-table");
-
-    table.innerHTML = `
-        <tr>
-            <td colspan="7" class="empty">Loading records...</td>
-        </tr>
-    `;
-
-    try {
-        const response = await fetch("/api/students");
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            throw new Error(result.message || "Unable to load records.");
-        }
-
-        const students = result.students || [];
-
-        table.innerHTML = "";
-
-        let importedCount = 0;
-
-        if (students.length === 0) {
-            table.innerHTML = `
-                <tr>
-                    <td colspan="7" class="empty">
-                        No student records found. Add a student using
-                        the form above.
-                    </td>
-                </tr>
-            `;
-        }
-
-        students.forEach(student => {
-            const row = document.createElement("tr");
-
-            addCell(row, student.id);
-            addCell(row, student.student_id);
-            addCell(row, student.name);
-            addCell(row, student.program);
-            addCell(row, student.year);
-            addCell(row, student.section);
-            addSourceCell(row, student.source);
-
-            table.appendChild(row);
-
-            if (student.source === "Classmate API") {
-                importedCount++;
-            }
-        });
-
-        document.getElementById("local-count").textContent =
-            students.length;
-
-        document.getElementById("imported-count").textContent =
-            importedCount;
-
-    } catch (error) {
-        table.innerHTML = `
-            <tr>
-                <td colspan="7" class="empty"></td>
-            </tr>
-        `;
-
-        table.querySelector(".empty").textContent = error.message;
-        showMessage(error.message, "error");
-    }
-}
-
-
-// =====================================================
-// ADD STUDENT TO MY RECORDS
-// =====================================================
-
-document.getElementById("add-student-form")
-.addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-    const button = document.getElementById("add-student-button");
-    button.disabled = true;
-    button.textContent = "Saving...";
-
-    const studentData = {
-        student_id: document.getElementById("new-student-id").value.trim(),
-        name: document.getElementById("new-student-name").value.trim(),
-        program: document.getElementById("new-student-program").value.trim(),
-        year: document.getElementById("new-student-year").value,
-        section: document.getElementById("new-student-section").value.trim()
-    };
-
-    try {
-        const response = await fetch("/add-student", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(studentData)
-        });
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            throw new Error(result.message || "Unable to add student.");
-        }
-
-        showMessage(result.message, "success");
-
-        document.getElementById("add-student-form").reset();
-
-        await loadMyRecords();
-
-    } catch (error) {
-        showMessage(error.message, "error");
-    } finally {
-        button.disabled = false;
-        button.textContent = "Add Student";
-    }
-});
-
-
-// =====================================================
-// SEARCH STUDENT RECORDS
-// =====================================================
-
-document.getElementById("retrieve-form")
-.addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-    const query = document.getElementById("retrieve-query").value.trim();
-    const table = document.getElementById("retrieve-results");
-
-    if (!query) {
-        showMessage("Please enter a Student ID or Name.", "error");
-        return;
-    }
-
-    table.innerHTML = `
-        <tr>
-            <td colspan="7" class="empty">Searching...</td>
-        </tr>
-    `;
-
-    try {
-        const response = await fetch(
-            "/search-students?q=" + encodeURIComponent(query)
-        );
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            throw new Error(result.message || "Search failed.");
-        }
-
-        table.innerHTML = "";
-
-        if (result.students.length === 0) {
-            table.innerHTML = `
-                <tr>
-                    <td colspan="7" class="empty">
-                        No matching student records found.
-                    </td>
-                </tr>
-            `;
-            return;
-        }
-
-        result.students.forEach(student => {
-            const row = document.createElement("tr");
-
-            addCell(row, student.id);
-            addCell(row, student.student_id);
-            addCell(row, student.name);
-            addCell(row, student.program);
-            addCell(row, student.year);
-            addCell(row, student.section);
-            addSourceCell(row, student.source);
-
-            table.appendChild(row);
-        });
-
-    } catch (error) {
-        table.innerHTML = `
-            <tr>
-                <td colspan="7" class="empty"></td>
-            </tr>
-        `;
-
-        table.querySelector(".empty").textContent = error.message;
-    }
-});
-
-
-// =====================================================
-// CLEAR STUDENT SEARCH
-// =====================================================
-
-function clearStudentSearch() {
-    document.getElementById("retrieve-form").reset();
-
-    document.getElementById("retrieve-results").innerHTML = `
-        <tr>
-            <td colspan="7" class="empty">
-                Search for a student to display records.
-            </td>
-        </tr>
-    `;
-}
-
-
-// =====================================================
-// RETRIEVE CLASSMATE'S RECORDS
-// =====================================================
-
-async function loadPartnerRecords() {
-    const table = document.getElementById("partner-records-table");
-
-    table.innerHTML = `
-        <tr>
-            <td colspan="6" class="empty">
-                Connecting to classmate's API...
-            </td>
-        </tr>
-    `;
-
-    try {
-        const response = await fetch("/partner-records");
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            throw new Error(result.message || "Unable to retrieve records.");
-        }
-
-        const students = result.students || [];
-
-        table.innerHTML = "";
-
-        document.getElementById("partner-count").textContent =
-            students.length;
-
-        if (students.length === 0) {
-            table.innerHTML = `
-                <tr>
-                    <td colspan="6" class="empty">
-                        No classmate records available.
-                    </td>
-                </tr>
-            `;
-            return;
-        }
-
-        students.forEach(student => {
-            const row = document.createElement("tr");
-
-            addCell(row, student.student_id);
-            addCell(row, student.name);
-            addCell(row, student.program);
-            addCell(row, student.year);
-            addCell(row, student.section);
-
-            const actionCell = document.createElement("td");
-            const saveButton = document.createElement("button");
-
-            saveButton.textContent = "Save Record";
-            saveButton.className = "btn-small";
-
-            saveButton.addEventListener("click", function() {
-                savePartnerRecord(student, saveButton);
-            });
-
-            actionCell.appendChild(saveButton);
-            row.appendChild(actionCell);
-
-            table.appendChild(row);
-        });
-
-        showMessage("Classmate's records retrieved successfully.");
-
-    } catch (error) {
-        table.innerHTML = `
-            <tr>
-                <td colspan="6" class="empty"></td>
-            </tr>
-        `;
-
-        table.querySelector(".empty").textContent = error.message;
-        showMessage(error.message, "error");
-    }
-}
-
-
-// =====================================================
-// SAVE CLASSMATE'S RECORD TO MY DATABASE
-// =====================================================
-
-async function savePartnerRecord(student, button) {
-    button.disabled = true;
-    button.textContent = "Saving...";
-
-    try {
-        const response = await fetch("/import-student", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                student_id: student.student_id,
-                name: student.name,
-                program: student.program,
-                year: student.year,
-                section: student.section
-            })
-        });
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            throw new Error(result.message || "Unable to save record.");
-        }
-
-        showMessage(result.message, "success");
-
-        await loadMyRecords();
-
-    } catch (error) {
-        showMessage(error.message, "error");
-    } finally {
-        button.disabled = false;
-        button.textContent = "Save Record";
-    }
-}
-
-
-// =====================================================
-// SEND STUDENT RECORD TO CLASSMATE'S API
-// =====================================================
-
-document.getElementById("send-form")
-.addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-    const button = document.getElementById("send-button");
-
-    const studentData = {
-        student_id: document.getElementById("send-student-id").value.trim(),
-        name: document.getElementById("send-name").value.trim(),
-        program: document.getElementById("send-program").value.trim(),
-        year: document.getElementById("send-year").value,
-        section: document.getElementById("send-section").value.trim()
-    };
-
-    button.disabled = true;
-    button.textContent = "Sending...";
-
-    try {
-        const response = await fetch("/send-to-partner", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(studentData)
-        });
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            throw new Error(result.message || "Unable to send student record.");
-        }
-
-        showMessage(result.message, "success");
-        document.getElementById("send-form").reset();
-
-    } catch (error) {
-        showMessage(error.message, "error");
-    } finally {
-        button.disabled = false;
-        button.textContent = "Send Student Record";
-    }
-});
-
-
-// =====================================================
-// SIDEBAR NAVIGATION
-// =====================================================
-
-document.querySelectorAll(".nav-link").forEach(link => {
-
-    link.addEventListener("click", function() {
-
-        const sectionId = this.dataset.section;
-
-        document.querySelectorAll(".nav-link").forEach(item => {
-            item.classList.remove("active");
-        });
-
-        this.classList.add("active");
-
-        document.querySelectorAll(".section").forEach(section => {
-            section.classList.remove("active");
-        });
-
-        document.getElementById(sectionId).classList.add("active");
-
-        if (sectionId === "my-records") {
-            loadMyRecords();
-        }
-
-        if (sectionId === "partner-records") {
-            loadPartnerRecords();
-        }
-
-        if (sectionId === "dashboard") {
-            loadMyRecords();
-        }
-
-    });
-
-});
-
-
-// =====================================================
-// LOAD RECORDS WHEN PAGE OPENS
-// =====================================================
-
-document.addEventListener("DOMContentLoaded", function() {
-    loadMyRecords();
-});
-
-</script>
+<footer>
+    Student Information System | Developed by Arnie Beliran
+</footer>
 
 </body>
 </html>
